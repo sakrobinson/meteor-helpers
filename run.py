@@ -1,6 +1,6 @@
 from cassandra.cluster import Cluster
-from get_actual import GetWeatherHistory
 from get_forecast import GetWeatherForecast
+from get_forecast import GetWeatherHistory
 import uuid
 from datetime import datetime
 

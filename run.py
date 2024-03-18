@@ -21,11 +21,11 @@ run_id = f"{date_prefix}_{uuid.uuid4().int}"  # Example: '20230101_1234567890123
 
 # Insert data into Cassandra
 insert_actual = session.prepare("""
-    INSERT INTO actual_weather (run_id, id, city_ascii, country, date, temperature_2m, pressure_msl, windspeed_10m, relativehumidity_2m, run_id)
+    INSERT INTO actual_weather (run_id, id, city_ascii, country, date, temperature_2m, pressure_msl, windspeed_10m, relativehumidity_2m)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
 """)
 insert_forecast = session.prepare("""
-    INSERT INTO forecast_weather (run_id, id, city_ascii, country, date, temperature_2m, pressure_msl, windspeed_10m, relativehumidity_2m, run_id)
+    INSERT INTO forecast_weather (run_id, id, city_ascii, country, date, temperature_2m, pressure_msl, windspeed_10m, relativehumidity_2m)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
 """)
 

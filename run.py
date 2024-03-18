@@ -2,6 +2,7 @@ from cassandra.cluster import Cluster
 from get_actual import GetWeatherHistory
 from get_forecast import GetWeatherForecast
 import uuid
+from datetime import datetime
 
 # Connect to Cassandra
 cluster = Cluster(['172.17.0.2']) # Cassandra Node 1 Server

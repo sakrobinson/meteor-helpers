@@ -17,14 +17,19 @@ class GetWeatherForecast:
         }
         response = requests.get(url, params=params)
         if response.status_code == 200:
-            return response.json()
+            forecast_data = response.json()
+            forecast_data['id'] = city_id
+            forecast_data['city_ascii'] = city_ascii
+            forecast_data['country'] = country
+            return forecast_data
         else:
             return None
 
     def get_forecasts(self):
         forecasts = []
         for index, row in self.cities_df.iterrows():
-            forecast = self.get_weather_forecast(row['lat'], row['lng'])
+            city_details = (row['lat'], row['lng'], row['id'], row['city_ascii'], row['country'])
+            forecast = self.get_weather_forecast(city_details)
             if forecast:
                 forecasts.append(forecast)
             else:

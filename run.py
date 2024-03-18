@@ -1,6 +1,6 @@
 from cassandra.cluster import Cluster
-from get_forecast import GetWeatherForecast
-from get_forecast import GetWeatherHistory
+from forecast import GetWeatherForecast
+from forecast import GetWeatherHistory
 import uuid
 from datetime import datetime
 
@@ -12,8 +12,9 @@ session = cluster.connect('weather_data')
 file_path = 'worldcities_sample.csv'
 w_forecast = GetWeatherForecast(file_path)
 w_actual = GetWeatherHistory(file_path)
-forecasts = w_forecast.get_forecasts()
-actuals = w_actual.get_yesterdays_weather()
+start_date, end_date = w_forecast.calculate_forecast_dates(days_ahead=1)
+forecasts = w_forecast.get_forecasts(start_date, end_date)
+actuals = w_actual.get_actuals(days_back =1)
 breakpoint()
 # Generate a unique run_id with a date prefix in the format YYYYMMDD
 date_prefix = datetime.now().strftime("%Y%m%d")

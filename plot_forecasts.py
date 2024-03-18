@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
-from get_forecast import GetWeatherForecast
-from get_forecast import GetWeatherHistory
+from forecast import GetWeatherForecast
+from forecast import GetWeatherHistory
 
 # Function to plot forecast and historical data for all locations
 def plot_forecasts_and_history(forecasts, history, cities_df):

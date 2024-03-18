@@ -45,17 +45,17 @@ class GetWeatherForecast:
         return start_date.strftime("%Y-%m-%dT00:00"), end_date.strftime("%Y-%m-%dT00:00")
 
     # Additional method to calculate the start and end dates for the history
-    def calculate_history_dates(self):
-        yesterday = datetime.now() - timedelta(days=1)
-        start_date = yesterday.strftime("%Y-%m-%dT00:00")
-        end_date = yesterday.strftime("%Y-%m-%dT23:59")
+    def calculate_history_dates(self, days_back=1):
+        target_date = datetime.now() - timedelta(days=days_back)
+        start_date = target_date.strftime("%Y-%m-%dT00:00")
+        end_date = target_date.strftime("%Y-%m-%dT23:59")
         return start_date, end_date
     
 
 class GetWeatherHistory(GetWeatherForecast):
-    def get_actuals(self):
+    def get_actuals(self, days_back):
         actuals = []
-        start_date, end_date = self.calculate_history_dates()
+        start_date, end_date = self.calculate_history_dates(days_back)
         for index, row in self.cities_df.iterrows():
             actual = self.get_weather_data(row['lat'], row['lng'], start_date, end_date)
             if actual:

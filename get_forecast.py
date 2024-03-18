@@ -6,11 +6,11 @@ class GetWeatherForecast:
         self.file_path = file_path
         self.cities_df = pd.read_csv(self.file_path)
 
-    def get_weather_forecast(self, lat, lon):
+    def get_weather_forecast(self, lat, lng):
         url = "https://api.open-meteo.com/v1/forecast"
         params = {
             "latitude": lat,
-            "longitude": lon,
+            "longitude": lng,
             "hourly": "temperature_2m,pressure_msl,windspeed_10m,relativehumidity_2m",
             "start": "2024-03-16T00:00",  # Update these dates to match your forecast period
             "end": "2024-03-18T00:00"     # Update these dates to match your forecast period

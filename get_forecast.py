@@ -6,11 +6,11 @@ class GetWeatherForecast:
         self.file_path = file_path
         self.cities_df = pd.read_csv(self.file_path)
 
-    def get_weather_forecast(self, lat, lng):
+    def get_weather_forecast(self, lat, lon):
         url = "https://api.open-meteo.com/v1/forecast"
         params = {
             "latitude": lat,
-            "longitude": lng,
+            "longitude": lon,
             "hourly": "temperature_2m,pressure_msl,windspeed_10m,relativehumidity_2m",
             "start": "2024-03-16T00:00",  # Update these dates to match your forecast period
             "end": "2024-03-18T00:00"     # Update these dates to match your forecast period
@@ -28,8 +28,7 @@ class GetWeatherForecast:
     def get_forecasts(self):
         forecasts = []
         for index, row in self.cities_df.iterrows():
-            city_details = (row['lat'], row['lng'], row['id'], row['city_ascii'], row['country'])
-            forecast = self.get_weather_forecast(city_details)
+            forecast = self.get_weather_forecast(row['lat'], row['lng'])
             if forecast:
                 forecasts.append(forecast)
             else:

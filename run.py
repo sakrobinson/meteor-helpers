@@ -32,7 +32,7 @@ insert_forecast = session.prepare("""
 for actual in actuals:
     # Assuming 'actual' is a dictionary with keys corresponding to the column names
     session.execute(insert_actual, (
-        actual['run_ID'],
+        actual['run_id'],
         actual['id'],
         actual['city_ascii'],
         actual['country'],
@@ -47,7 +47,7 @@ for actual in actuals:
 for forecast in forecasts:
     # Assuming 'forecast' is a dictionary with keys corresponding to the column names
     session.execute(insert_forecast, (
-        forecast['run_ID'],
+        forecast['run_id'],
         forecast['id'],
         forecast['city_ascii'],
         forecast['country'],

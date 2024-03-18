@@ -1,9 +1,9 @@
 import requests
 import pandas as pd
 from datetime import datetime, timedelta
-from get_forecast import WeatherForecastFetcher
+from get_forecast import GetWeatherForecast
 
-class GetWeatherHistory(WeatherForecastFetcher):
+class GetWeatherHistory(GetWeatherForecast):
     def fetch_weather_history(self, lat, lon):
         # Calculate yesterday's date
         yesterday = datetime.now() - timedelta(days=1)
@@ -17,7 +17,7 @@ class GetWeatherHistory(WeatherForecastFetcher):
             "hourly": "temperature_2m,pressure_msl,windspeed_10m,relativehumidity_2m",
             "start": start_date,
             "end": end_date,
-            "timezone": "auto"  # Ensure the timezone is handled correctly
+            "timezone": "auto"  # Ensure the timezone is handled correctly - local timezones used throughout
         }
         response = requests.get(url, params=params)
         if response.status_code == 200:
@@ -32,5 +32,5 @@ class GetWeatherHistory(WeatherForecastFetcher):
             if history:
                 weather_data.append(history)
             else:
-                print(f"Failed to fetch history for {row['lat']}, {row['lng']}")
+                print(f"Failed to get history for {row['lat']}, {row['lng']}")
         return weather_data

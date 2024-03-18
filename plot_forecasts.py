@@ -32,7 +32,7 @@ def plot_forecasts_and_history(forecasts, history, cities_df):
         plt.legend()
         plt.show()
 
-# Instantiate the WeatherForecastFetcher and WeatherHistoryFetcher
+# Instantiate the WeatherForecast and WeatherHistory
 file_path = 'worldcities_sample.csv'  # Updated file path
 w_forecast = GetWeatherForecast(file_path)
 w_actual = GetWeatherHistory(file_path)

@@ -7,7 +7,7 @@ USE weather_data;
 
 -- Create the table for actual weather data
 CREATE TABLE IF NOT EXISTS actual_weather (
-    run_id text
+    run_id text,
     id text,
     city_ascii text,
     country text,

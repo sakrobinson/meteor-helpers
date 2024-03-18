@@ -40,8 +40,8 @@ w_actual = GetWeatherHistory(file_path)
 
 # Get forecasts and historical data
 forecasts = w_forecast.get_forecasts()
-breakpoint()
 yesterdays_weather = w_actual.get_yesterdays_weather()
+breakpoint()
 
 # Plot them
 plot_forecasts_and_history(forecasts, yesterdays_weather, weather_fetcher.cities_df)

@@ -30,32 +30,43 @@ insert_forecast = session.prepare("""
 """)
 
 for actual in actuals:
-    # Assuming 'actual' is a dictionary with keys corresponding to the column names
-    session.execute(insert_actual, (
-        run_id,
-        actual['id'],
-        actual['city_ascii'],
-        actual['country'],
-        actual['date'],
-        actual['temperature_2m'],
-        actual['pressure_msl'],
-        actual['windspeed_10m'],
-        actual['relativehumidity_2m']
-    ))
+    hourly_data = actual['hourly']
+    times = hourly_data['time']
+    
+    for time_point in times:
+        index = times.index(time_point)
+        session.execute(insert_actual, (
+            run_id,
+            str(actual['id']),  # Convert ID to string if necessary
+            actual['city_ascii'],
+            actual['country'],
+            datetime.strptime(time_point, "%Y-%m-%dT%H:%M"),  # Convert time to datetime object
+            hourly_data['temperature_2m'][index],
+            hourly_data['pressure_msl'][index],
+            hourly_data['windspeed_10m'][index],
+            hourly_data['relativehumidity_2m'][index]
+        ))
 
 for forecast in forecasts:
-    # Assuming 'forecast' is a dictionary with keys corresponding to the column names
-    session.execute(insert_forecast, (
-        run_id,
-        forecast['id'],
-        forecast['city_ascii'],
-        forecast['country'],
-        forecast['date'],
-        forecast['temperature_2m'],
-        forecast['pressure_msl'],
-        forecast['windspeed_10m'],
-        forecast['relativehumidity_2m']
-    ))
+    city_ids = forecast['id'].tolist()  # Convert pandas Series to list
+    city_names = forecast['city_ascii'].tolist()  # Convert pandas Series to list
+    countries = forecast['country'].tolist()  # Convert pandas Series to list
+    hourly_data = forecast['hourly']
+    times = hourly_data['time']
+    
+    for i, time_point in enumerate(times):
+        for j, city_id in enumerate(city_ids):
+            session.execute(insert_forecast, (
+                run_id,
+                str(city_id),  # Ensure the ID is a string
+                city_names[j],
+                countries[j],
+                datetime.strptime(time_point, "%Y-%m-%dT%H:%M"),  # Convert time to datetime object
+                hourly_data['temperature_2m'][i],
+                hourly_data['pressure_msl'][i],
+                hourly_data['windspeed_10m'][i],
+                hourly_data['relativehumidity_2m'][i]
+            ))
 
 # Close the connection
 cluster.shutdown()

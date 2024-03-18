@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS forecast_weather (
     run_id text,
     id text,
     city_ascii text,
+    country text,
     date timestamp,
     temperature_2m double,
     pressure_msl double,

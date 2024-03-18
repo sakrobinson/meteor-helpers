@@ -1,6 +1,6 @@
 -- Create the keyspace
 CREATE KEYSPACE IF NOT EXISTS weather_data
-WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 3};
+WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1}; --change replication facto when you have more machines in the cluster
 
 -- Use the keyspace
 USE weather_data;

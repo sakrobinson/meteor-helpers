@@ -18,9 +18,9 @@ class GetWeatherForecast:
         response = requests.get(url, params=params)
         if response.status_code == 200:
             forecast_data = response.json()
-            forecast_data['id'] = city_id
-            forecast_data['city_ascii'] = city_ascii
-            forecast_data['country'] = country
+            forecast_data['id'] = self.cities_df.id
+            forecast_data['city_ascii'] = self.cities_df.city_ascii
+            forecast_data['country'] = self.cities_df.country
             return forecast_data
         else:
             return None

@@ -4,7 +4,7 @@ from get_forecast import GetWeatherForecast
 import uuid
 
 # Connect to Cassandra
-cluster = Cluster(['cassandra-node1', 'cassandra-node2'])
+cluster = Cluster(['38.242.246.51']) # Cassandra Node 1 Server
 session = cluster.connect('weather_data')
 
 # Fetch data

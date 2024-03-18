@@ -40,8 +40,7 @@ for actual in actuals:
         actual['temperature_2m'],
         actual['pressure_msl'],
         actual['windspeed_10m'],
-        actual['relativehumidity_2m'],
-        run_id
+        actual['relativehumidity_2m']
     ))
 
 for forecast in forecasts:
@@ -55,8 +54,7 @@ for forecast in forecasts:
         forecast['temperature_2m'],
         forecast['pressure_msl'],
         forecast['windspeed_10m'],
-        forecast['relativehumidity_2m'],
-        run_id
+        forecast['relativehumidity_2m']
     ))
 
 # Close the connection

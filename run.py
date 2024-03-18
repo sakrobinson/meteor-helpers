@@ -14,7 +14,7 @@ w_forecast = GetWeatherForecast(file_path)
 w_actual = GetWeatherHistory(file_path)
 forecasts = w_forecast.get_forecasts()
 actuals = w_actual.get_yesterdays_weather()
-
+breakpoint()
 # Generate a unique run_id with a date prefix in the format YYYYMMDD
 date_prefix = datetime.now().strftime("%Y%m%d")
 run_id = f"{date_prefix}_{uuid.uuid4().int}"  # Example: '20230101_12345678901234567890'

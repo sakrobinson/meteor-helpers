@@ -21,17 +21,18 @@ run_id = f"{date_prefix}_{uuid.uuid4().int}"  # Example: '20230101_1234567890123
 
 # Insert data into Cassandra
 insert_actual = session.prepare("""
-    INSERT INTO actual_weather (city_id, city_ascii, country, date, temperature_2m, pressure_msl, windspeed_10m, relativehumidity_2m, run_id)
+    INSERT INTO actual_weather (run_id, id, city_ascii, country, date, temperature_2m, pressure_msl, windspeed_10m, relativehumidity_2m, run_id)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
 """)
 insert_forecast = session.prepare("""
-    INSERT INTO forecast_weather (city_id, city_ascii, country, date, temperature_2m, pressure_msl, windspeed_10m, relativehumidity_2m, run_id)
+    INSERT INTO forecast_weather (run_id, id, city_ascii, country, date, temperature_2m, pressure_msl, windspeed_10m, relativehumidity_2m, run_id)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
 """)
 
 for actual in actuals:
     # Assuming 'actual' is a dictionary with keys corresponding to the column names
     session.execute(insert_actual, (
+        actual['run_ID'],
         actual['id'],
         actual['city_ascii'],
         actual['country'],
@@ -46,6 +47,7 @@ for actual in actuals:
 for forecast in forecasts:
     # Assuming 'forecast' is a dictionary with keys corresponding to the column names
     session.execute(insert_forecast, (
+        forecast['run_ID'],
         forecast['id'],
         forecast['city_ascii'],
         forecast['country'],

@@ -9,7 +9,7 @@ cluster = Cluster(['172.17.0.2']) # Cassandra Node 1 Server
 session = cluster.connect('weather_data')
 
 # Fetch data
-file_path = 'worldcities_sample.csv'
+file_path = 'worldcities.csv'
 w_forecast = GetWeatherForecast(file_path)
 w_actual = GetWeatherHistory(file_path)
 start_date, end_date = w_forecast.calculate_forecast_dates(days_ahead=1)
@@ -19,7 +19,7 @@ actuals = w_actual.get_actuals(days_back =1)
 # Generate a unique run_id with a date prefix in the format YYYYMMDD
 date_prefix = datetime.now().strftime("%Y%m%d")
 run_id = f"{date_prefix}_{uuid.uuid4().int}"  # Example: '20230101_12345678901234567890'
-
+print(run_id)
 # Insert data into Cassandra
 insert_actual = session.prepare("""
     INSERT INTO actual_weather (run_id, id, city_ascii, country, date, temperature_2m, pressure_msl, windspeed_10m, relativehumidity_2m)

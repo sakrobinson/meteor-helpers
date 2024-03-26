@@ -9,7 +9,7 @@ cluster = Cluster(['172.17.0.2']) # Cassandra Node 1 Server
 session = cluster.connect('weather_data')
 
 # Fetch data
-file_path = 'worldcities.csv'
+file_path = 'worldcities_sample.csv'
 w_forecast = GetWeatherForecast(file_path)
 w_actual = GetWeatherHistory(file_path)
 start_date, end_date = w_forecast.calculate_forecast_dates(days_ahead=1)
@@ -29,7 +29,7 @@ insert_forecast = session.prepare("""
     INSERT INTO forecast_weather (run_id, id, city_ascii, country, date, temperature_2m, pressure_msl, windspeed_10m, relativehumidity_2m)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
 """)
-
+print('Generating actuals...')
 for actual in actuals:
     hourly_data = actual['hourly']
     times = hourly_data['time']
@@ -48,6 +48,7 @@ for actual in actuals:
             hourly_data['relativehumidity_2m'][index]
         ))
 
+print('Generating forecasts...')
 for forecast in forecasts:
     city_ids = forecast['id'].tolist()  # Convert pandas Series to list
     city_names = forecast['city_ascii'].tolist()  # Convert pandas Series to list
@@ -57,6 +58,7 @@ for forecast in forecasts:
     
     for i, time_point in enumerate(times):
         for j, city_id in enumerate(city_ids):
+            print(f"Forecasting for: {city_names[j]}")  # Log statement for PM2
             session.execute(insert_forecast, (
                 run_id,
                 str(city_id),  # Ensure the ID is a string
@@ -68,6 +70,6 @@ for forecast in forecasts:
                 hourly_data['windspeed_10m'][i],
                 hourly_data['relativehumidity_2m'][i]
             ))
-
+print("Done")
 # Close the connection
 cluster.shutdown()

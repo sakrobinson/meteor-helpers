@@ -1,0 +1,35 @@
+city,city_ascii,lat,lng,country,iso2,iso3,admin_name,capital,population,id
+Tokyo,Tokyo,35.6897,139.6922,Japan,JP,JPN,Tōkyō,primary,37732000,1392685764
+Jakarta,Jakarta,-6.175,106.8275,Indonesia,ID,IDN,Jakarta,primary,33756000,1360771077
+Delhi,Delhi,28.61,77.23,India,IN,IND,Delhi,admin,32226000,1356872604
+Guangzhou,Guangzhou,23.13,113.26,China,CN,CHN,Guangdong,admin,26940000,1156237133
+Mumbai,Mumbai,19.0761,72.8775,India,IN,IND,Mahārāshtra,admin,24973000,1356226629
+Manila,Manila,14.5958,120.9772,Philippines,PH,PHL,Manila,primary,24922000,1608618140
+Shanghai,Shanghai,31.1667,121.4667,China,CN,CHN,Shanghai,admin,24073000,1156073548
+São Paulo,Sao Paulo,-23.55,-46.6333,Brazil,BR,BRA,São Paulo,admin,23086000,1076532519
+Seoul,Seoul,37.56,126.99,South Korea,KR,KOR,Seoul,primary,23016000,1410836482
+Mexico City,Mexico City,19.4333,-99.1333,Mexico,MX,MEX,Ciudad de México,primary,21804000,1484247881
+Cairo,Cairo,30.0444,31.2358,Egypt,EG,EGY,Al Qāhirah,primary,20296000,1818253931
+New York,New York,40.6943,-73.9249,United States,US,USA,New York,,18972871,1840034016
+Dhaka,Dhaka,23.7639,90.3889,Bangladesh,BD,BGD,Dhaka,primary,18627000,1050529279
+Beijing,Beijing,39.904,116.4075,China,CN,CHN,Beijing,primary,18522000,1156228865
+Kolkāta,Kolkata,22.5675,88.37,India,IN,IND,West Bengal,admin,18502000,1356060520
+Bangkok,Bangkok,13.7525,100.4942,Thailand,TH,THA,Krung Thep Maha Nakhon,primary,18007000,1764068610
+Shenzhen,Shenzhen,22.535,114.054,China,CN,CHN,Guangdong,minor,17619000,1156158707
+Moscow,Moscow,55.7558,37.6178,Russia,RU,RUS,Moskva,primary,17332000,1643318494
+Buenos Aires,Buenos Aires,-34.5997,-58.3819,Argentina,AR,ARG,"Buenos Aires, Ciudad Autónoma de",primary,16710000,1032717330
+Lagos,Lagos,6.455,3.3841,Nigeria,NG,NGA,Lagos,minor,16637000,1566593751
+Istanbul,Istanbul,41.0136,28.955,Turkey,TR,TUR,İstanbul,admin,16079000,1792756324
+Karachi,Karachi,24.86,67.01,Pakistan,PK,PAK,Sindh,admin,15738000,1586129469
+Bangalore,Bangalore,12.9789,77.5917,India,IN,IND,Karnātaka,admin,15386000,1356410365
+Ho Chi Minh City,Ho Chi Minh City,10.7756,106.7019,Vietnam,VN,VNM,Hồ Chí Minh,admin,15136000,1704774326
+Ōsaka,Osaka,34.6939,135.5022,Japan,JP,JPN,Ōsaka,admin,15126000,1392419823
+Chengdu,Chengdu,30.66,104.0633,China,CN,CHN,Sichuan,admin,14645000,1156421555
+Tehran,Tehran,35.6892,51.3889,Iran,IR,IRN,Tehrān,primary,14148000,1364305026
+Kinshasa,Kinshasa,-4.325,15.3222,Congo (Kinshasa),CD,COD,Kinshasa,primary,12836000,1180000363
+Rio de Janeiro,Rio de Janeiro,-22.9111,-43.2056,Brazil,BR,BRA,Rio de Janeiro,admin,12592000,1076887657
+Chennai,Chennai,13.0825,80.275,India,IN,IND,Tamil Nādu,admin,12395000,1356374944
+Xi’an,Xi'an,34.2667,108.9,China,CN,CHN,Shaanxi,admin,12328000,1156244079
+Lahore,Lahore,31.5497,74.3436,Pakistan,PK,PAK,Punjab,admin,12306000,1586801463
+Chongqing,Chongqing,29.55,106.5069,China,CN,CHN,Chongqing,admin,12135000,1156936556
+Los Angeles,Los Angeles,34.1141,-118.4068,United States,US,USA,California,,12121244,1840020491

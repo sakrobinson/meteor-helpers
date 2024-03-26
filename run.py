@@ -50,26 +50,26 @@ for actual in actuals:
 
 print('Generating forecasts...')
 for forecast in forecasts:
-    city_ids = forecast['id'].tolist()  # Convert pandas Series to list
-    city_names = forecast['city_ascii'].tolist()  # Convert pandas Series to list
-    countries = forecast['country'].tolist()  # Convert pandas Series to list
+    city_id = str(forecast['id'])  # Convert ID to string if necessary
+    city_name = forecast['city_ascii']
+    country = forecast['country']
     hourly_data = forecast['hourly']
     times = hourly_data['time']
+    print(f"Generating forecast for: {city_name}")  # Log statement for PM2
     
-    for i, time_point in enumerate(times):
-        for j, city_id in enumerate(city_ids):
-            print(f"Forecasting for: {city_names[j]}")  # Log statement for PM2
-            session.execute(insert_forecast, (
-                run_id,
-                str(city_id),  # Ensure the ID is a string
-                city_names[j],
-                countries[j],
-                datetime.strptime(time_point, "%Y-%m-%dT%H:%M"),  # Convert time to datetime object
-                hourly_data['temperature_2m'][i],
-                hourly_data['pressure_msl'][i],
-                hourly_data['windspeed_10m'][i],
-                hourly_data['relativehumidity_2m'][i]
-            ))
+    for index, time_point in enumerate(times):
+        
+        session.execute(insert_forecast, (
+            run_id,
+            city_id,
+            city_name,
+            country,
+            datetime.strptime(time_point, "%Y-%m-%dT%H:%M"),  # Convert time to datetime object
+            hourly_data['temperature_2m'][index],
+            hourly_data['pressure_msl'][index],
+            hourly_data['windspeed_10m'][index],
+            hourly_data['relativehumidity_2m'][index]
+        ))
 print("Done")
 # Close the connection
 cluster.shutdown()

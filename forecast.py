@@ -13,8 +13,8 @@ class GetWeatherForecast:
             "latitude": lat,
             "longitude": lon,
             "hourly": "temperature_2m,pressure_msl,windspeed_10m,relativehumidity_2m",
-            "start": start_date,
-            "end": end_date,
+            "start_date": start_date,
+            "end_date": end_date,
             "timezone": "auto"  # Handle timezone automatically
         }
         response = requests.get(url, params=params)

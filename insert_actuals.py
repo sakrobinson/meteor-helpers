@@ -4,7 +4,7 @@ from datetime import datetime
 import uuid
 
 # days back
-actual_days = 3
+actual_days = 2
 
 # Connect to Cassandra
 cluster = Cluster(['172.17.0.2'])  # Adjust IP as needed

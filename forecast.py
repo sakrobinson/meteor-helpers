@@ -28,23 +28,23 @@ class GetWeatherForecast:
         else:
             return None
 
-def get_forecasts(self, start_date, end_date):
-    forecasts = []
-    for index, row in self.cities_df.iterrows():
-        forecast = self.get_weather_data(
-            lat=row['lat'],
-            lon=row['lng'],
-            start_date=start_date,
-            end_date=end_date,
-            city_id=row['id'],
-            city_name=row['city_ascii'],
-            country=row['country']
-        )
-        if forecast:
-            forecasts.append(forecast)
-        else:
-            print(f"Failed to return forecast for {row['city_ascii']}")
-    return forecasts
+    def get_forecasts(self, start_date, end_date):
+        forecasts = []
+        for index, row in self.cities_df.iterrows():
+            forecast = self.get_weather_data(
+                lat=row['lat'],
+                lon=row['lng'],
+                start_date=start_date,
+                end_date=end_date,
+                city_id=row['id'],
+                city_name=row['city_ascii'],
+                country=row['country']
+            )
+            if forecast:
+                forecasts.append(forecast)
+            else:
+                print(f"Failed to return forecast for {row['city_ascii']}")
+        return forecasts
 
     # Additional method to calculate the start and end dates for the forecast
     def calculate_forecast_dates(self, days_ahead):

@@ -47,8 +47,8 @@ class GetWeatherForecast:
     # Additional method to calculate the start and end dates for the history
     def calculate_history_dates(self, days_back=1):
         target_date = datetime.now() - timedelta(days=days_back)
-        start_date = target_date.strftime("%Y-%m-%dT00:00")
-        end_date = target_date.strftime("%Y-%m-%dT23:59")
+        start_date = target_date.strftime("%Y-%m-%d")
+        end_date = target_date.strftime("%Y-%m-%d")
         return start_date, end_date
     
 

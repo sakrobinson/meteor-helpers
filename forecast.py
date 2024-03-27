@@ -7,7 +7,7 @@ class GetWeatherForecast:
         self.file_path = file_path
         self.cities_df = pd.read_csv(self.file_path)
 
-    def get_weather_data(self, lat, lon, start_date, end_date):
+    def get_weather_data(self, lat, lon, start_date, end_date, city_id, city_name, country):
         url = "https://api.open-meteo.com/v1/forecast"
         params = {
             "latitude": lat,
@@ -21,22 +21,30 @@ class GetWeatherForecast:
         if response.status_code == 200:
             weather_data = response.json()
             # Add city information to the weather data
-            weather_data['id'] = self.cities_df.id
-            weather_data['city_ascii'] = self.cities_df.city_ascii
-            weather_data['country'] = self.cities_df.country
+            weather_data['id'] = city_id
+            weather_data['city_ascii'] = city_name
+            weather_data['country'] = country
             return weather_data
         else:
             return None
 
-    def get_forecasts(self, start_date, end_date):
-        forecasts = []
-        for index, row in self.cities_df.iterrows():
-            forecast = self.get_weather_data(row['lat'], row['lng'], start_date, end_date)
-            if forecast:
-                forecasts.append(forecast)
-            else:
-                print(f"Failed to return forecast for {row['lat']}, {row['lng']}")
-        return forecasts
+def get_forecasts(self, start_date, end_date):
+    forecasts = []
+    for index, row in self.cities_df.iterrows():
+        forecast = self.get_weather_data(
+            lat=row['lat'],
+            lon=row['lng'],
+            start_date=start_date,
+            end_date=end_date,
+            city_id=row['id'],
+            city_name=row['city_ascii'],
+            country=row['country']
+        )
+        if forecast:
+            forecasts.append(forecast)
+        else:
+            print(f"Failed to return forecast for {row['city_ascii']}")
+    return forecasts
 
     # Additional method to calculate the start and end dates for the forecast
     def calculate_forecast_dates(self, days_ahead):
@@ -57,10 +65,15 @@ class GetWeatherHistory(GetWeatherForecast):
         actuals = []
         start_date, end_date = self.calculate_history_dates(days_back)
         for index, row in self.cities_df.iterrows():
-            actual = self.get_weather_data(row['lat'], row['lng'], start_date, end_date)
+            actual = self.get_weather_data(
+                lat=row['lat'],
+                lon=row['lng'],
+                start_date=start_date,
+                end_date=end_date,
+                city_id=row['id'],
+                city_name=row['city_ascii'],
+                country=row['country']
+            )
             if actual:
-                actual['id'] = row['id']
-                actual['city_ascii'] = row['city_ascii']
-                actual['country'] = row['country']
                 actuals.append(actual)
         return actuals

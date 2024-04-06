@@ -22,12 +22,12 @@ run_id = f"{date_prefix}_{uuid.uuid4().int}"  # Example: '20230101_1234567890123
 print(run_id)
 # Insert data into Cassandra
 insert_actual = session.prepare("""
-    INSERT INTO actual_weather (run_id, id, city_ascii, country, date, temperature_2m, pressure_msl, windspeed_10m, relativehumidity_2m)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO actual_weather (run_id, id, city_ascii, country, date, temperature_2m, pressure_msl, windspeed_10m, relativehumidity_2m, lon, lat, day, month, year)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 """)
 insert_forecast = session.prepare("""
-    INSERT INTO forecast_weather (run_id, id, city_ascii, country, date, temperature_2m, pressure_msl, windspeed_10m, relativehumidity_2m)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO forecast_weather (run_id, id, city_ascii, country, date, temperature_2m, pressure_msl, windspeed_10m, relativehumidity_2m, lon, lat, day, month, year)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 """)
 print('Generating actuals...')
 for actual in actuals:
@@ -36,17 +36,23 @@ for actual in actuals:
     
     for time_point in times:
         index = times.index(time_point)
+        date_object = datetime.strptime(time_point, "%Y-%m-%dT%H:%M")
         session.execute(insert_actual, (
             run_id,
-            str(actual['id']),  # Convert ID to string if necessary
+            str(actual['id']),
             actual['city_ascii'],
             actual['country'],
-            datetime.strptime(time_point, "%Y-%m-%dT%H:%M"),  # Convert time to datetime object
+            date_object,
             hourly_data['temperature_2m'][index],
             hourly_data['pressure_msl'][index],
             hourly_data['windspeed_10m'][index],
-            hourly_data['relativehumidity_2m'][index]
-        ))
+            hourly_data['relativehumidity_2m'][index],
+            actual['lon'],
+            actual['lat'],
+            date_object.day,
+            date_object.month,
+            date_object.year
+            ))
 
 print('Generating forecasts...')
 for forecast in forecasts:
@@ -59,17 +65,23 @@ for forecast in forecasts:
     
     for index, time_point in enumerate(times):
         
-        session.execute(insert_forecast, (
-            run_id,
-            city_id,
-            city_name,
-            country,
-            datetime.strptime(time_point, "%Y-%m-%dT%H:%M"),  # Convert time to datetime object
-            hourly_data['temperature_2m'][index],
-            hourly_data['pressure_msl'][index],
-            hourly_data['windspeed_10m'][index],
-            hourly_data['relativehumidity_2m'][index]
-        ))
+            datetime_object = datetime.strptime(time_point, "%Y-%m-%dT%H:%M")
+            session.execute(insert_forecast, (
+                run_id,
+                city_id,
+                city_name,
+                country,
+                datetime_object,
+                hourly_data['temperature_2m'][index],
+                hourly_data['pressure_msl'][index],
+                hourly_data['windspeed_10m'][index],
+                hourly_data['relativehumidity_2m'][index],
+                forecast['lon'],
+                forecast['lat'],
+                datetime_object.day,
+                datetime_object.month,
+                datetime_object.year
+            ))
 print("Done")
 # Close the connection
 cluster.shutdown()

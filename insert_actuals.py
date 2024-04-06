@@ -26,8 +26,8 @@ run_id = f"{date_prefix}_{uuid.uuid4().int}"
 
 # Prepare the insert statement
 insert_actual = session.prepare("""
-    INSERT INTO actual_weather (run_id, id, city_ascii, country, date, temperature_2m, pressure_msl, windspeed_10m, relativehumidity_2m)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO actual_weather (run_id, id, city_ascii, country, date, temperature_2m, pressure_msl, windspeed_10m, relativehumidity_2m, lon, lat, day, month, year)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 """)
 
 # Insert data into Cassandra
@@ -37,17 +37,23 @@ for actual in actuals:
     
     for time_point in times:
         index = times.index(time_point)
+        date_object = datetime.strptime(time_point, "%Y-%m-%dT%H:%M")
         session.execute(insert_actual, (
             run_id,
             str(actual['id']),
             actual['city_ascii'],
             actual['country'],
-            datetime.strptime(time_point, "%Y-%m-%dT%H:%M"),
+            date_object,
             hourly_data['temperature_2m'][index],
             hourly_data['pressure_msl'][index],
             hourly_data['windspeed_10m'][index],
-            hourly_data['relativehumidity_2m'][index]
-        ))
+            hourly_data['relativehumidity_2m'][index],
+            actual['lon'],
+            actual['lat'],
+            date_object.day,
+            date_object.month,
+            date_object.year
+            ))
 
 # Close the connection
 cluster.shutdown()

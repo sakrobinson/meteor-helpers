@@ -24,6 +24,8 @@ class GetWeatherForecast:
             weather_data['id'] = city_id
             weather_data['city_ascii'] = city_name
             weather_data['country'] = country
+            weather_data['lat'] = lat  # Ensure this line is present
+            weather_data['lon'] = lon  # Ensure this line is present
             return weather_data
         else:
             return None

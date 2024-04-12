@@ -22,12 +22,20 @@ run_id = f"{date_prefix}_{uuid.uuid4().int}"  # Example: '20230101_1234567890123
 print(run_id)
 # Insert data into Cassandra
 insert_actual = session.prepare("""
-    INSERT INTO actual_weather (run_id, id, city_ascii, country, date, temperature_2m, pressure_msl, windspeed_10m, relativehumidity_2m, lon, lat, day, month, year)
+    INSERT INTO actual_weather (run_id, id, city_ascii, country, date, 
+    temperature_2m, pressure_msl, windspeed_10m, relativehumidity_2m, lon, lat, day, month, year)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 """)
 insert_forecast = session.prepare("""
-    INSERT INTO forecast_weather (run_id, id, city_ascii, country, date, temperature_2m, pressure_msl, windspeed_10m, relativehumidity_2m, lon, lat, day, month, year)
+    INSERT INTO forecast_weather (run_id, id, city_ascii, country, date, 
+    temperature_2m, pressure_msl, windspeed_10m, relativehumidity_2m, lon, lat, day, month, year)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+""")
+# Define the new insert statement for the combined data
+insert_combined = session.prepare("""
+    INSERT INTO weather_data_combined (date, lat, lon, city_ascii, country, 
+    data_type, temperature_2m, pressure_msl, windspeed_10m, relativehumidity_2m)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 """)
 print('Generating actuals...')
 for actual in actuals:
@@ -53,6 +61,18 @@ for actual in actuals:
             date_object.month,
             date_object.year
             ))
+        session.execute(insert_combined, (
+            actual['date'],
+            actual['lat'],
+            actual['lon'],
+            actual['city_ascii'],
+            actual['country'],
+            'actual',  # data_type is 'actual' for actual weather data
+            actual['temperature_2m'],
+            actual['pressure_msl'],
+            actual['windspeed_10m'],
+            actual['relativehumidity_2m']
+        ))
 
 print('Generating forecasts...')
 for forecast in forecasts:
@@ -81,6 +101,18 @@ for forecast in forecasts:
                 datetime_object.day,
                 datetime_object.month,
                 datetime_object.year
+            ))
+            session.execute(insert_combined, (
+                forecast['date'],
+                forecast['lat'],
+                forecast['lon'],
+                forecast['city_ascii'],
+                forecast['country'],
+                'forecast',  # data_type is 'forecast' for forecast weather data
+                forecast['temperature_2m'],
+                forecast['pressure_msl'],
+                forecast['windspeed_10m'],
+                forecast['relativehumidity_2m']
             ))
 print("Done")
 # Close the connection

@@ -62,7 +62,7 @@ for actual in actuals:
             date_object.year
             ))
         session.execute(insert_combined, (
-            actual['date'],
+            date_object,
             actual['lat'],
             actual['lon'],
             actual['city_ascii'],

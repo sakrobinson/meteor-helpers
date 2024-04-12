@@ -68,10 +68,10 @@ for actual in actuals:
             actual['city_ascii'],
             actual['country'],
             'actual',  # data_type is 'actual' for actual weather data
-            actual['temperature_2m'],
-            actual['pressure_msl'],
-            actual['windspeed_10m'],
-            actual['relativehumidity_2m']
+            hourly_data['temperature_2m'][index],  # Access the temperature using the index
+            hourly_data['pressure_msl'][index],    # Access the pressure using the index
+            hourly_data['windspeed_10m'][index],   # Access the windspeed using the index
+            hourly_data['relativehumidity_2m'][index]  # Access the humidity using the index
         ))
 
 print('Generating forecasts...')

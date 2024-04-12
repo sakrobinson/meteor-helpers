@@ -103,16 +103,16 @@ for forecast in forecasts:
                 datetime_object.year
             ))
             session.execute(insert_combined, (
-                forecast['date'],
+                date_object,
                 forecast['lat'],
                 forecast['lon'],
                 forecast['city_ascii'],
                 forecast['country'],
                 'forecast',  # data_type is 'forecast' for forecast weather data
-                forecast['temperature_2m'],
-                forecast['pressure_msl'],
-                forecast['windspeed_10m'],
-                forecast['relativehumidity_2m']
+                hourly_data['temperature_2m'][index],  # Access the temperature using the index
+                hourly_data['pressure_msl'][index],    # Access the pressure using the index
+                hourly_data['windspeed_10m'][index],   # Access the windspeed using the index
+                hourly_data['relativehumidity_2m'][index]  # Access the humidity using the index
             ))
 print("Done")
 # Close the connection
